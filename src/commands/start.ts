@@ -1,6 +1,6 @@
-import { SlashCommand, SlashCreator } from 'slash-create';
+import { SlashCommand, SlashCreator, CommandContext } from 'slash-create';
 import axios from 'axios';
-import { cocId } from './coc';
+import { cocId, blacklist } from './coc';
 // const allowedIDs = ['125916793817530368', '262522481376493568',"246599730979799040","294217592007163905",];
 
 export class StartCommand extends SlashCommand {
@@ -11,7 +11,10 @@ export class StartCommand extends SlashCommand {
     });
   }
 
-  async run(): Promise<string> {
+  async run(ctx: CommandContext): Promise<string> {
+    if (blacklist.includes(ctx.user.id)) {
+      return 'donder op kut brave';
+    }
     const body = [4236940, cocId];
 
     try {

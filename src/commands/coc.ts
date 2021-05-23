@@ -2,6 +2,7 @@ import { SlashCommand, CommandOptionType, CommandContext, SlashCreator } from 's
 import axios from 'axios';
 
 // const allowedIDs = ['125916793817530368', '262522481376493568',"246599730979799040","294217592007163905",];
+export const blacklist = ['326072736717733909'];
 // eslint-disable-next-line import/no-mutable-exports
 let cocId: string;
 
@@ -31,9 +32,10 @@ export class CocCommand extends SlashCommand {
   }
 
   async run(ctx: CommandContext): Promise<string> {
-    // if (!allowedIDs.includes(ctx.user.id)) {
-    //   return 'ja eh, dat wordt m niet he, pikkie';
-    // }
+    if (blacklist.includes(ctx.user.id)) {
+      return 'donder op kut brave';
+    }
+
     let { fastest, shortest, reverse } = ctx.options;
 
     if (fastest === undefined) fastest = true;
