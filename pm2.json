@@ -1,9 +1,9 @@
 {
   "apps": [
     {
-      "name": "slash-commands",
-			"script": "node",
-			"args": "src/index.js"
+      "name": "discord-coc",
+      "script": "node",
+      "args": "dist/index.js"
     }
   ]
 }

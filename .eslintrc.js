@@ -1,22 +1,18 @@
+/* eslint-disable import/no-commonjs */
 module.exports = {
-  env: {
-    commonjs: true,
-    es6: true,
-    node: true
-  },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
-  globals: {},
-  plugins: 'prettier',
   parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module'
+    parser: '@typescript-eslint/parser',
+    project: ['./tsconfig.json']
   },
+  extends: [
+    '@tribecamp/base',
+    '@tribecamp/typescript',
+    'prettier',
+    'prettier/@typescript-eslint',
+    'prettier/unicorn'
+  ],
   rules: {
-    'prettier/prettier': 'warn',
-    'no-cond-assign': [2, 'except-parens'],
-    'no-unused-vars': 0,
-    'no-empty': ['error', { allowEmptyCatch: true }],
-    'prefer-const': ['warn', { destructuring: 'all' }],
-    'spaced-comment': 'warn'
+    'no-console': 'off',
+    'require-await': 'off'
   }
 };
