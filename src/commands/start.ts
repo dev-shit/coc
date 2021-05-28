@@ -15,7 +15,7 @@ export class StartCommand extends SlashCommand {
     if (blacklist.includes(ctx.user.id)) {
       return 'donder op kut brave';
     }
-    const body = [4236940, cocId];
+    const body = [4364481, cocId];
 
     try {
       await axios({
