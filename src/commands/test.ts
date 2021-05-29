@@ -10,7 +10,8 @@ export class cocLinkCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
     super(creator, {
       name: 'test',
-      description: 'yeet!'
+      description: 'yeet!',
+      guildIDs: ['846468617142009917']
     });
   }
 
