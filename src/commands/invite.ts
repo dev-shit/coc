@@ -7,6 +7,7 @@ export class cocInviteCommand extends SlashCommand {
     super(creator, {
       name: 'cocvite',
       description: 'inviten!!',
+      guildIDs: ['846468617142009917'],
       options: [{ name: 'target', description: 'persoon', type: CommandOptionType.USER }]
     });
   }

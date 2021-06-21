@@ -24,29 +24,13 @@ export class cocLinkCommand extends SlashCommand {
           components: [
             {
               type: ComponentType.BUTTON,
-              style: ButtonStyle.PRIMARY,
-              label: 'button',
-              custom_id: 'example_button',
+              style: ButtonStyle.DESTRUCTIVE,
+              label: 'knop',
+              custom_id: 'a',
               emoji: {
-                name: '👌'
-              }
-            },
-            {
-              type: ComponentType.BUTTON,
-              style: ButtonStyle.PRIMARY,
-              label: 'boop',
-              custom_id: 'fff',
-              emoji: {
-                name: '👌'
-              }
-            },
-            {
-              type: ComponentType.BUTTON,
-              style: ButtonStyle.PRIMARY,
-              label: 'tee',
-              custom_id: 'aaa',
-              emoji: {
-                name: '👌'
+                name: 'peepoalarm',
+                animated: true,
+                id: '845381587134840912'
               }
             }
           ]

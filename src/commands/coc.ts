@@ -4,7 +4,9 @@ import {
   CommandContext,
   SlashCreator,
   Message,
-  ApplicationCommandPermissionType
+  ApplicationCommandPermissionType,
+  ComponentType,
+  ButtonStyle
 } from 'slash-create';
 import axios from 'axios';
 
@@ -20,31 +22,48 @@ export class CocCommand extends SlashCommand {
     super(creator, {
       name: 'coc',
       description: 'HET IS COC TIJD!!',
+      guildIDs: ['846468617142009917'],
       defaultPermission: false,
       permissions: {
         '846468617142009917': [
           {
             type: ApplicationCommandPermissionType.ROLE,
-            id: '847740634697695233',
+            id: '847948760319262772',
             permission: true
           }
         ]
       },
       options: [
+        // {
+        //   type: CommandOptionType.BOOLEAN,
+        //   name: 'fastest',
+        //   description: 'snelheid!'
+        // },
+        // {
+        //   type: CommandOptionType.BOOLEAN,
+        //   name: 'shortest',
+        //   description: 'kortste!'
+        // },
         {
-          type: CommandOptionType.BOOLEAN,
-          name: 'fastest',
-          description: 'snelheid!'
+          type: CommandOptionType.STRING,
+          choices: [
+            { name: 'ANDERSOM', value: 'REVERSE' },
+            { name: 'SNELSTE', value: 'FASTEST' },
+            { name: 'KORTSTE', value: 'SHORTEST' },
+            { name: 'allemaal', value: 'allemaal' }
+          ],
+          name: 'soort',
+          description: 'soort!!'
         },
         {
-          type: CommandOptionType.BOOLEAN,
-          name: 'shortest',
-          description: 'kortste!'
-        },
-        {
-          type: CommandOptionType.BOOLEAN,
-          name: 'reverse',
-          description: 'puzzel!'
+          type: CommandOptionType.STRING,
+          choices: [
+            { name: 'javascript', value: 'Javascript' },
+            { name: 'ruby', value: 'Ruby' },
+            { name: 'go', value: 'Go' }
+          ],
+          name: 'taal',
+          description: 'taal!!'
         }
       ]
     });
@@ -59,11 +78,7 @@ export class CocCommand extends SlashCommand {
       );
     }
 
-    let { fastest, shortest, reverse } = ctx.options;
-
-    if (fastest === undefined) fastest = true;
-    if (shortest === undefined) shortest = true;
-    if (reverse === undefined) reverse = true;
+    const { soort, taal } = ctx.options;
 
     const body = [
       4364481,
@@ -71,22 +86,22 @@ export class CocCommand extends SlashCommand {
         SHORT: true
       },
       [],
+      // ['Javascript', 'Ruby', 'Go']
       []
       // ['FASTEST', 'SHORTEST', 'REVERSE']
     ];
-    const gamemode = [];
 
-    if (fastest === true) gamemode.push('FASTEST');
-    if (shortest === true) gamemode.push('SHORTEST');
-    if (reverse === true) gamemode.push('REVERSE');
-
-    if (reverse === false && shortest === false && fastest === false) {
-      gamemode.push('FASTEST');
-      gamemode.push('SHORTEST');
-      gamemode.push('REVERSE');
+    if (soort === undefined || soort === 'allemaal') {
+      body[3] = ['FASTEST', 'SHORTEST', 'REVERSE'];
+    } else {
+      body[3] = [soort];
     }
 
-    body[3] = gamemode;
+    if (taal === undefined) {
+      body[2] = [];
+    } else {
+      body[2] = [taal];
+    }
 
     try {
       const res = await axios({
@@ -101,6 +116,7 @@ export class CocCommand extends SlashCommand {
 
       const id = res.data.publicHandle;
       cocId = id;
+      const cocLink = `https://www.codingame.com/clashofcode/clash/${id}`;
       timeout = new Date().getTime() + 60 * 1000;
       return await ctx.send(
         `<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`,
@@ -109,9 +125,23 @@ export class CocCommand extends SlashCommand {
           embeds: [
             {
               title: 'Clash Of Code tijd!',
-              url: `https://www.codingame.com/clashofcode/clash/${id}`,
-              description: gamemode.join(' ').toLowerCase(),
+              url: cocLink,
+              description: body[3].toLocaleString(),
               footer: { text: `door ${ctx.user.username}#${ctx.user.discriminator}` }
+            }
+          ],
+          components: [
+            {
+              type: ComponentType.ACTION_ROW,
+              components: [
+                {
+                  style: ButtonStyle.LINK,
+                  label: 'naar de coc',
+                  type: ComponentType.BUTTON,
+                  url: cocLink,
+                  emoji: { animated: true, id: '845381587134840912', name: 'peepoalarm' }
+                }
+              ]
             }
           ]
         }
@@ -121,6 +151,7 @@ export class CocCommand extends SlashCommand {
       // )}\n<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`)
     } catch (err) {
       console.log(err.response.data.message);
+      console.log(body);
       return await ctx.send(
         `domme hoer, je kan ook echt niks he..\n${err.message}\n${err.response.data.message}`
       );
