@@ -8,7 +8,8 @@ const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,
   token: process.env.DISCORD_BOT_TOKEN,
-  serverPort: 8020
+  serverPort: 8020,
+  serverHost: '0.0.0.0'
 });
 
 creator.on('debug', (message) => console.log(message));
