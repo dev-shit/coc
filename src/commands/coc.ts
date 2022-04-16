@@ -110,7 +110,7 @@ export class CocCommand extends SlashCommand {
         },
         data: body
       });
-
+      console.log(res.data);
       const id = res.data.publicHandle;
       cocId = id;
       const cocLink = `https://www.codingame.com/clashofcode/clash/${id}`;
