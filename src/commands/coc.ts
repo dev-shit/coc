@@ -82,9 +82,6 @@ export class CocCommand extends SlashCommand {
 
     const body = [
       4364481,
-      {
-        SHORT: true
-      },
       [],
       // ['Javascript', 'Ruby', 'Go']
       []
@@ -92,15 +89,15 @@ export class CocCommand extends SlashCommand {
     ];
 
     if (soort === undefined || soort === 'allemaal') {
-      body[3] = ['FASTEST', 'SHORTEST', 'REVERSE'];
+      body[2] = ['FASTEST', 'SHORTEST', 'REVERSE'];
     } else {
-      body[3] = [soort];
+      body[2] = [soort];
     }
 
     if (taal === undefined) {
-      body[2] = [];
+      body[1] = [];
     } else {
-      body[2] = [taal];
+      body[1] = [taal];
     }
 
     try {
