@@ -147,10 +147,9 @@ export class CocCommand extends SlashCommand {
       // ' '
       // )}\n<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`)
     } catch (err) {
-      console.log(err.response.data.message);
-      console.log(body);
+      console.log(err, body);
       return await ctx.send(
-        `domme hoer, je kan ook echt niks he..\n${err.message}\n${err.response.data.message}`
+        `domme hoer, je kan ook echt niks he..\n${JSON.stringify(err, null, ' ')}}`
       );
     }
   }
