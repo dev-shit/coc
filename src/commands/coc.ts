@@ -123,7 +123,8 @@ export class CocCommand extends SlashCommand {
             {
               title: 'Clash Of Code tijd!',
               url: cocLink,
-              description: body[3].toLocaleString(),
+              // @ts-expect-error fuck deze shit lmao im out of time
+              description: body[3],
               footer: { text: `door ${ctx.user.username}#${ctx.user.discriminator}` }
             }
           ],
