@@ -110,12 +110,13 @@ export class CocCommand extends SlashCommand {
         },
         data: body
       });
-      console.log(res.data);
+
       const id = res.data.publicHandle;
       cocId = id;
       const cocLink = `https://www.codingame.com/clashofcode/clash/${id}`;
       timeout = new Date().getTime() + 60 * 1000;
-      return await ctx.send(
+
+      await ctx.send(
         `<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`,
         {
           allowedMentions: { roles: true, everyone: false },
@@ -123,7 +124,9 @@ export class CocCommand extends SlashCommand {
             {
               title: 'Clash Of Code tijd!',
               url: cocLink,
-              description: body[2].toLocaleString(),
+              description: `${body[2].toLocaleString()}\n${
+                body[1] ? body[1].toLocaleString() : 'ALL'
+              }`,
               footer: { text: `door ${ctx.user.username}#${ctx.user.discriminator}` }
             }
           ],
@@ -143,6 +146,15 @@ export class CocCommand extends SlashCommand {
           ]
         }
       );
+
+      return await ctx.send('<@&847797851248394280>', {
+        allowedMentions: {
+          roles: true,
+          everyone: false,
+          users: false
+        }
+      });
+
       // return await ctx.send(`<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>\nHET IS COC TIJD!! https://www.codingame.com/clashofcode/clash/${id}\n${gamemode.join(
       // ' '
       // )}\n<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`)
