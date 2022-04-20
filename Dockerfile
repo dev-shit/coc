@@ -9,4 +9,7 @@ RUN yarn install
 
 COPY . .
 
+RUN yarn compile
+
+
 CMD [ "node", "dist" ]
