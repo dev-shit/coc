@@ -7,7 +7,7 @@ import {
   ButtonStyle
 } from 'slash-create';
 import axios from 'axios';
-import { redisClient } from 'src';
+import { redisClient } from '../index';
 
 async function submitCode(id: string): Promise<void> {
   const body = [

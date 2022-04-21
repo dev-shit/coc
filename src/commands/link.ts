@@ -1,5 +1,5 @@
 import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
-import { redisClient } from 'src';
+import { redisClient } from '../index';
 
 export class cocLinkCommand extends SlashCommand {
   constructor(creator: SlashCreator) {

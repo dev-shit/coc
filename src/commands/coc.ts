@@ -9,7 +9,7 @@ import {
   ButtonStyle
 } from 'slash-create';
 import axios from 'axios';
-import { redisClient } from 'src';
+import { redisClient } from '../index';
 
 export class CocCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
