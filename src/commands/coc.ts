@@ -9,13 +9,7 @@ import {
   ButtonStyle
 } from 'slash-create';
 import axios from 'axios';
-
-// const allowedIDs = ['125916793817530368', '262522481376493568',"246599730979799040","294217592007163905",];
-export const blacklist = ['326072736717733909'];
-// eslint-disable-next-line import/no-mutable-exports
-let cocId: string;
-// eslint-disable-next-line import/no-mutable-exports
-let timeout: number;
+import { redisClient } from 'src';
 
 export class CocCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
@@ -72,6 +66,8 @@ export class CocCommand extends SlashCommand {
   async run(ctx: CommandContext): Promise<boolean | Message> {
     const nu = Date.now();
 
+    const timeout = ((await redisClient.get(`${ctx.guildID}-timeout`)) as unknown) as number;
+
     if (nu < timeout) {
       return await ctx.send(
         `oeps, je zult ff moeten wachten (nog ${Math.round((timeout - nu) / 1000)} seconden)`
@@ -112,9 +108,10 @@ export class CocCommand extends SlashCommand {
       });
 
       const id = res.data.publicHandle;
-      cocId = id;
       const cocLink = `https://www.codingame.com/clashofcode/clash/${id}`;
-      timeout = new Date().getTime() + 60 * 1000;
+
+      await redisClient.set(`${ctx.guildID}-id`, id);
+      await redisClient.set(`${ctx.guildID}-timeout`, new Date().getTime() + 60 * 1000);
 
       await ctx.send(
         `<a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912><a:peepoalarm:845381587134840912>`,
@@ -164,5 +161,3 @@ export class CocCommand extends SlashCommand {
     }
   }
 }
-
-export { cocId, timeout };

@@ -1,8 +1,20 @@
 import { SlashCreator, FastifyServer } from 'slash-create';
 import path from 'path';
+import { createClient } from 'redis';
 
 // eslint-disable-next-line import/no-commonjs
 require('dotenv').config();
+
+// init redis
+const redisClient = createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
+});
+
+redisClient.on('error', (err) => console.log('Redis Client Error', err));
+
+(async (): Promise<void> => {
+  await redisClient.connect();
+})();
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
@@ -35,3 +47,5 @@ creator
   .startServer();
 
 // This should serve in localhost:8020/interactions
+
+export { redisClient };

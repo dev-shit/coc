@@ -2,14 +2,12 @@ import {
   SlashCommand,
   SlashCreator,
   CommandContext,
-  Message,
   ApplicationCommandPermissionType,
   ComponentType,
   ButtonStyle
 } from 'slash-create';
 import axios from 'axios';
-import { cocId } from './coc';
-// const allowedIDs = ['125916793817530368', '262522481376493568',"246599730979799040","294217592007163905",];
+import { redisClient } from 'src';
 
 async function submitCode(id: string): Promise<void> {
   const body = [
@@ -52,6 +50,7 @@ export class StartCommand extends SlashCommand {
   }
 
   async run(ctx: CommandContext): Promise<void> {
+    const cocId = await redisClient.get(`${ctx.guildID}-id`);
     const body = [4364481, cocId];
 
     try {

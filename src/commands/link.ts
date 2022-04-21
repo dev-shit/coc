@@ -1,6 +1,5 @@
-import { SlashCommand, SlashCreator } from 'slash-create';
-
-import { cocId } from './coc';
+import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
+import { redisClient } from 'src';
 
 export class cocLinkCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
@@ -11,10 +10,8 @@ export class cocLinkCommand extends SlashCommand {
     });
   }
 
-  async run(): Promise<string> {
-    // if (blacklist.includes(ctx.user.id)) {
-    //   return 'donder op kut brave';
-    // }
+  async run(ctx: CommandContext): Promise<string> {
+    const cocId = await redisClient.get(`${ctx.guildID}-id`);
 
     if (cocId === undefined) {
       return 'doe eerst ff /coc runnen';
